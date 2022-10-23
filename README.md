@@ -1,4 +1,5 @@
 # MasterThesis: Data Trustworthiness Assessment for Traffic Condition Participatory Sensing Scenario  
+
 ## SUMO  
 Part of the code is quoted from the large-scale and high-accuracy traffic simulation scenario for SUMO (Simulator of Urban MObility), version 0.32.0 described in the following paper:
 
@@ -24,5 +25,40 @@ Each 12 hour period is calibrated independently, having its own demand file and 
     
     
     
-    
-## Requirements
+## Data trustworthiness assessment  
+### Requirements
+* `scipy>=0.19.0
+* `numpy>=1.12.1
+* `pandas>=0.19.2
+* `pyaml
+* `statsmodels
+* `tensorflow>=1.3.0
+
+### Data Preparation
+Run the following commands to generate train/test/val dataset
+```bash
+# Create data directories
+python dataprep.py
+python generate_training_data.py
+
+dataset_attacker.ipynb  # attacker data for user distinction
+```
+
+### Graph Construction
+```bash
+gen_adj_mx.ipynb
+```
+
+### Model Training 
+```bash
+# DCRNN
+python dcrnn_train.py --config_filename=dcrnn_train.yaml
+
+# DCRNN-NoCov
+python dcrnn_train.py --config_filename=crnn_nocov_train.yaml
+```
+
+### Run the Pre-trained Model on METR-LA
+```bash
+result_and_visualization.ipynb
+```

@@ -26,6 +26,17 @@ Each 12 hour period is calibrated independently, having its own demand file and 
     
     
 ## Data trustworthiness assessment  
+
+Part of the code is quoted from the DCRNN work described in the following paper:
+    ```
+    @inproceedings{li2018dcrnn_traffic,
+      title={Diffusion Convolutional Recurrent Neural Network: Data-Driven Traffic Forecasting},
+      author={Li, Yaguang and Yu, Rose and Shahabi, Cyrus and Liu, Yan},
+      booktitle={International Conference on Learning Representations (ICLR '18)},
+      year={2018}
+    }
+    ```
+    
 ### Requirements
 * `scipy>=0.19.0
 * `numpy>=1.12.1

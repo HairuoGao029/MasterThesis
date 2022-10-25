@@ -50,8 +50,8 @@ Run the following commands to generate train/test/val dataset
 ```bash
 # Create data directories
 python dataprep.py
-python generate_training_data.py
-
+python generate_training_data.py  # dataset used for training DCRNN and DCRNN-NoCov
+python generate_testing_data.py  # real-time data  
 dataset_attacker.ipynb  # attacker data for user distinction
 ```
 
@@ -66,10 +66,20 @@ gen_adj_mx.ipynb
 python dcrnn_train.py --config_filename=dcrnn_train.yaml
 
 # DCRNN-NoCov
-python dcrnn_train.py --config_filename=crnn_nocov_train.yaml
+python dcrnn_train.py --config_filename=dcrnn_nocov_train.yaml
 ```
 
-### Run the Pre-trained Model on METR-LA
+### Run the Pre-trained Model on testing data
 ```bash
-result_and_visualization.ipynb
+python run_prediction.py --config_filename=pretrained_model/DCRNN/config_23.yaml
+python run_prediction.py --config_filename=pretrained_model/DCRNN_NoCov/config_11.yaml
+
+or go to run_prediction.ipynb for GPU
+
+ARIMA.py
+```
+
+### Experiments
+```bash
+Experiments and visualization.ipynb
 ```

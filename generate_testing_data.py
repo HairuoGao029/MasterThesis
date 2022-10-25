@@ -52,18 +52,21 @@ def generate_graph_seq2seq_io_data(
 
 
 def generate_train_val_test(output_dir, data_raw):
+    
     datatmp = []
     final = []
     for i in range(len(data_raw)):
-        datatmp = data_raw[i][1]
+      datatmp = data_raw[i][1]
+      if (len(datatmp)) != 2880:
+            datatmp += [datatmp[-1]] * (2880-len(datatmp))
 
-        if (len(datatmp)) != 5760:
-            datatmp += [datatmp[-1]] * (5760-len(datatmp))
-
-        final.append(datatmp)
+      final.append(datatmp)
+    # cut the dataset if shorter time series is needed. for example: 5 min.
+    #final_cut = final[time1:time1+30]
     df = np.array(final)
 
-    print('df', df.shape)
+
+    print('df',df.shape)
 
     # 0 is the latest observed sample.
     x_offsets = np.sort(
@@ -84,24 +87,13 @@ def generate_train_val_test(output_dir, data_raw):
 
     print("x shape: ", x.shape, ", y shape: ", y.shape)
     # Write the data into npz file.
-    # 70% is used for training, 10% is used for testing and 20% is used for validation.
-    # testing set here is different from that for experiments
     num_samples = x.shape[0]
-    num_test = round(num_samples * 0.1)
-    num_train = round(num_samples * 0.7)
-    num_val = num_samples - num_test - num_train
+    num_test = round(num_samples * 1)
 
-    # train
-    x_train, y_train = x[:num_train], y[:num_train]
-    # val
-    x_val, y_val = (
-        x[num_train: num_train + num_val],
-        y[num_train: num_train + num_val],
-    )
     # test
     x_test, y_test = x[-num_test:], y[-num_test:]
 
-    for cat in ["train", "val", "test"]:
+    for cat in ["test"]:
         _x, _y = locals()["x_" + cat], locals()["y_" + cat]
         print(cat, "x: ", _x.shape, "y:", _y.shape)
         np.savez_compressed(
@@ -113,13 +105,15 @@ def generate_train_val_test(output_dir, data_raw):
         )
 
 
+
 def main(output_dir, data_raw):
-    print("Generating training data")
+    print("Generating testing data")
+    data_raw = data_raw
     generate_train_val_test(output_dir, data_raw)
 
 
 if __name__ == "__main__":
-    output_dir = "datasets/8h_2days/"
+    output_dir = "datasets/10s_8h_2days_test/"
     data_raw = np.load('rawdata/npy/8h_2days_fill.npy', allow_pickle=True)
 
     main(output_dir, data_raw)

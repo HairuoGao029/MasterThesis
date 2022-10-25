@@ -76,7 +76,7 @@ python run_prediction.py --config_filename=pretrained_model/DCRNN_NoCov/config_1
 
 or go to run_prediction.ipynb for GPU
 
-ARIMA.py
+ARIMA.ipynb
 ```
 
 ### Experiments
